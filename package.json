@@ -1,0 +1,35 @@
+{
+  "name": "url_shortner",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file=.env --watch server/index.js ",
+    "start": "node --env-file=.env server/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "argon2": "^0.41.1",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
+    "drizzle-orm": "^0.39.3",
+    "ejs": "^3.1.10",
+    "express": "^5.0.1",
+    "express-session": "^1.18.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0",
+    "nodemailer": "^6.10.0",
+    "request-ip": "^3.3.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "drizzle-kit": "^0.30.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
