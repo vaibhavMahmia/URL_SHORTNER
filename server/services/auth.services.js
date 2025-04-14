@@ -99,7 +99,7 @@ export const refreshTokens = async (refreshToken) => {
             user: userInfo,
         };
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 };
 
@@ -140,3 +140,13 @@ export const getAllShortLinks = async (userId) => {
         .where(eq(shortLinksTable.userId, userId));
 };
 
+export const updateUserByName = async ({ userId, name }) => await db.update(usersTable).set({ name: name }).where(eq(usersTable.id, userId));
+
+export const updateUserPassword = async ({ userId, newPassword }) => {
+    const newHashPassword = await hashPassword(newPassword);
+
+    return await db
+        .update(usersTable)
+        .set({ password: newHashPassword })
+        .where(eq(usersTable.id, userId));
+};
