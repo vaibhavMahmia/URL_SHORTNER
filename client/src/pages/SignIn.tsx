@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Input } from '../components/UI/Input';
-import { signupThunkAction } from '../store/reducers/auth_reducer';
+import { loginThunkAction, signupThunkAction } from '../store/reducers/auth_reducer';
 import { useAppDispatch } from '../store';
+import { useNavigate } from 'react-router-dom';
 
 export const SignIn: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
@@ -17,14 +19,29 @@ export const SignIn: React.FC = () => {
     e.preventDefault();
     setError(null); // Reset error state
     try {
-      const resultAction = await dispatch(signupThunkAction(inputs));
-      if (signupThunkAction.fulfilled.match(resultAction)) {
-        // Handle successful signup (e.g., redirect or show a success message)
-        console.log('Signup successful:', resultAction.payload);
+      if (isSignup) {
+        const resultAction = await dispatch(signupThunkAction(inputs));
+        if (signupThunkAction.fulfilled.match(resultAction)) {
+          // Handle successful signup (e.g., redirect or show a success message)
+          console.log('Signup successful:', resultAction);
+          navigate('/');
+
+        } else {
+          // Handle errors (e.g., show an error message)
+          setError(resultAction.error.message || 'Signup failed');
+          console.log(error);
+        }
       } else {
-        // Handle errors (e.g., show an error message)
-        setError(resultAction.error.message || 'Signup failed');
-        console.log(error);
+        const resultAction = await dispatch(loginThunkAction(inputs));
+        if (loginThunkAction.fulfilled.match(resultAction)) {
+          // Handle successful signup (e.g., redirect or show a success message)
+          console.log('Login successful:', resultAction);
+          navigate('/');
+        } else {
+          // Handle errors (e.g., show an error message)
+          setError(resultAction.error.message || 'Login failed');
+          console.log(error);
+        }
       }
     } catch (err) {
       setError('An unexpected error occurred');

@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { FaSignOutAlt } from 'react-icons/fa';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { getProfileThunkAction, logoutThunkAction } from '../../store/reducers/auth_reducer';
 
 export const Navbar: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const { user } = useAppSelector((state) => state.URIShortner)
+    useEffect(() => {
+        dispatch(getProfileThunkAction());
+    }, [dispatch])
+
     return (
         <div className="navbar text-neutral-content w-full p-1 rounded-lg shadow-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
             <div className="navbar-start p-2 gap-2">
@@ -13,7 +22,6 @@ export const Navbar: React.FC = () => {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                         <li className='text-lg'><Link to={'/profile'}>Profile</Link></li>
-                        <li className='text-lg'><Link to={'/signin'}>SignIN</Link></li>
                     </ul>
                 </div>
                 <ul>
@@ -23,11 +31,20 @@ export const Navbar: React.FC = () => {
             <div className="navbar-center hidden lg:flex text-neutral-content">
                 <ul className="menu menu-horizontal px-1">
                     <li className='text-lg'><Link to={'/profile'}>Profile</Link></li>
-                    <li className='text-lg'><Link to={'/signin'}>SignIN</Link></li>
                 </ul>
             </div>
+
             <div className="navbar-end p-2">
-                <a className="">Button</a>
+                {user ? (
+                    <button className='btn btn-wide bg-error' onClick={() => dispatch(logoutThunkAction())}>
+                        <FaSignOutAlt /> Logout
+                    </button>
+                ) : (
+                    <Link to="/signin" className='btn btn-wide'>
+                        Sign In
+                    </Link>
+                )}
+
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { signUP, signUPDataType } from "../../api";
+import { getProfile, logIn, logINDataType, logOut, signUP, signUPDataType } from "../../api";
 
 export const signupThunkAction = createAsyncThunk(
     'uriShortner/signup',
@@ -9,6 +9,42 @@ export const signupThunkAction = createAsyncThunk(
             return data;
         } catch (error) {
             return rejectWithValue(error.response.data); // Handle error appropriately
+        }
+    }
+);
+
+export const loginThunkAction = createAsyncThunk(
+    'uriShortner/login',
+    async (formData: logINDataType, { rejectWithValue }) => {
+        try {
+            const { data } = await logIn(formData);
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const logoutThunkAction = createAsyncThunk(
+    'uriShortner/logout',
+    async (_, { rejectWithValue }) => {
+        try {
+            const { data } = await logOut();
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const getProfileThunkAction = createAsyncThunk(
+    'uriShortner/profile',
+    async (_, { rejectWithValue }) => {
+        try {
+            const { data } = await getProfile();
+            return data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
         }
     }
 );
