@@ -1,51 +1,39 @@
 import React, { useState } from 'react';
 import { Input } from '../components/UI/Input';
 import { loginThunkAction, signupThunkAction } from '../store/reducers/auth_reducer';
-import { useAppDispatch } from '../store';
+import { setError, useAppDispatch, useAppSelector } from '../store';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export const SignIn: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { loading, error } = useAppSelector((state) => state.URIShortner);
   const [inputs, setInputs] = useState({
     name: '',
     email: '',
     password: ''
   });
-  const [error, setError] = useState<string | null>(null);
   const [isSignup, setIsSignup] = useState(false);
-
   const handleFormSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    setError(null); // Reset error state
     try {
       if (isSignup) {
         const resultAction = await dispatch(signupThunkAction(inputs));
-        if (signupThunkAction.fulfilled.match(resultAction)) {
-          // Handle successful signup (e.g., redirect or show a success message)
-          console.log('Signup successful:', resultAction);
+        if (signupThunkAction.fulfilled.match(resultAction)) 
           navigate('/');
-
-        } else {
-          // Handle errors (e.g., show an error message)
-          setError(resultAction.error.message || 'Signup failed');
-          console.log(error);
-        }
       } else {
         const resultAction = await dispatch(loginThunkAction(inputs));
-        if (loginThunkAction.fulfilled.match(resultAction)) {
-          // Handle successful signup (e.g., redirect or show a success message)
-          console.log('Login successful:', resultAction);
+        if (loginThunkAction.fulfilled.match(resultAction))
           navigate('/');
-        } else {
-          // Handle errors (e.g., show an error message)
-          setError(resultAction.error.message || 'Login failed');
-          console.log(error);
-        }
       }
     } catch (err) {
-      setError('An unexpected error occurred');
       console.log(err);
+    } finally {
+      if(error){
+        toast.error(error);
+        dispatch(setError(null));
+      }
     }
   }
   return (
@@ -65,8 +53,8 @@ export const SignIn: React.FC = () => {
             </button>
           </div>
           <div>
-            <button className='btn btn-block btn-sm mt-2'>
-              {isSignup ? 'SignUp' : 'Login'}
+            <button className='btn btn-block btn-sm mt-2' disabled={loading}>
+              {loading ? <span className='loading loading-spinner'></span>: isSignup ? 'SignUp' : 'Login'}
             </button>
           </div>
         </form>

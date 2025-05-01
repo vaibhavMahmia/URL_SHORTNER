@@ -1,14 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getProfile, logIn, logINDataType, logOut, signUP, signUPDataType } from "../../api";
 
+
 export const signupThunkAction = createAsyncThunk(
     'uriShortner/signup',
     async (formdata: signUPDataType, { rejectWithValue }) => {
         try {
-            const { data } = await signUP(formdata); // Ensure signUP returns a promise
+            await signUP(formdata); // Ensure signUP returns a promise
+            const { data } = await getProfile();
             return data;
         } catch (error) {
-            return rejectWithValue(error.response.data); // Handle error appropriately
+            return rejectWithValue(error.response?.data?.error); // Handle error appropriately
         }
     }
 );
@@ -17,10 +19,11 @@ export const loginThunkAction = createAsyncThunk(
     'uriShortner/login',
     async (formData: logINDataType, { rejectWithValue }) => {
         try {
-            const { data } = await logIn(formData);
+            await logIn(formData);
+            const { data } = await getProfile();
             return data;
         } catch (error) {
-            return rejectWithValue(error.response.data);
+            return rejectWithValue(error.response?.data?.error);
         }
     }
 );
@@ -32,7 +35,7 @@ export const logoutThunkAction = createAsyncThunk(
             const { data } = await logOut();
             return data;
         } catch (error) {
-            return rejectWithValue(error.response.data);
+            return rejectWithValue(error.response?.data?.error);
         }
     }
 );
@@ -44,7 +47,7 @@ export const getProfileThunkAction = createAsyncThunk(
             const { data } = await getProfile();
             return data;
         } catch (error) {
-            return rejectWithValue(error.response.data);
+            return rejectWithValue(error.response?.data?.error);
         }
     }
 );
