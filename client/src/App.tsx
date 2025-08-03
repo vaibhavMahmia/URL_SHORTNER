@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout';
 import { ErrorPage } from './pages/ErrorPage';
 import { Home } from './pages/Home';
 import { SignIn } from './pages/SignIn';
 import { Profile } from './pages/Profile';
+import { useAppDispatch } from './store';
+import { getProfileThunkAction } from './store/reducers/auth_reducer';
 
 
 const router = createBrowserRouter([
@@ -30,7 +32,14 @@ const router = createBrowserRouter([
 ])
 
 const App: React.FC = ()  => {
-  return <RouterProvider router={ router }/>
+  
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getProfileThunkAction())
+  }, [dispatch]);
+
+  return <RouterProvider router={ router }/>;
 }
 
-export default App
+export default App;

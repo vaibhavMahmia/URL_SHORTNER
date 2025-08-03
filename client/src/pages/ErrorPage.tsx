@@ -1,7 +1,3 @@
 import React from 'react';
 
-export const ErrorPage: React.FC = () => {
-  return (
-    <div>ErrorPage</div>
-  )
-}
+export const ErrorPage: React.FC = () => <div>ErrorPage</div>;

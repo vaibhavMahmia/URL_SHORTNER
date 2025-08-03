@@ -1,7 +1,8 @@
 import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getProfileThunkAction, loginThunkAction, logoutThunkAction, signupThunkAction } from "./reducers/auth_reducer";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { InitialStateType } from "./reducers/reducer.types";
+import { InitialStateType } from "../Types/types";
+
 
 const initialState: InitialStateType = {
     loading: false,
@@ -28,7 +29,6 @@ const URIShortnerSlice = createSlice({
                 state.loading = false;
                 state.user = action.payload.user;
                 state.links = action.payload.links;
-                localStorage.setItem('loggedIn', 'true');
             })
             .addCase(signupThunkAction.rejected, (state, action) => {
                 state.loading = false;
@@ -42,7 +42,6 @@ const URIShortnerSlice = createSlice({
                 state.loading = false;
                 state.user = action.payload.user;
                 state.links = action.payload.links;
-                localStorage.setItem('loggedIn', 'true');
             })
             .addCase(loginThunkAction.rejected, (state, action) => {
                 state.loading = false;
@@ -56,7 +55,6 @@ const URIShortnerSlice = createSlice({
                 state.loading = false;
                 state.user = null;
                 state.links = [];
-                localStorage.setItem('loggedIn', 'false');
             })
             .addCase(logoutThunkAction.rejected, (state, action) => {
                 state.loading = false;
