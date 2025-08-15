@@ -9,7 +9,7 @@ export const Navbar: React.FC = () => {
     const dispatch = useAppDispatch();
     const { user, loading } = useAppSelector((state) => state.URIShortner);
 
-    return <div className="navbar text-gray-800 w-full p-0 rounded-lg shadow-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 min-h-0 h-12 bg-gray-800/40">
+    return <div className="navbar text-gray-800 w-full p-0 rounded-lg shadow-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 min-h-0 h-12 bg-gray-500/60">
         <div className="navbar-start p-0 gap-1 min-h-0">
             {user &&
                 <div className="dropdown text-gray-800">

@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Navbar } from '../UI/Navbar';
 
-export const AppLayout: React.FC = () => <div className="h-screen container m-auto rounded-lg shadow-lg border border-gray-500/40">
+export const AppLayout: React.FC = () => <div className="h-screen container m-auto rounded-lg shadow-lg border backdrop-filter backdrop-blur bg-opacity-0 bg-gray-300/40 border-gray-500/40 overflow-y-auto">
   <div className="sticky top-0 z-50">
       <Navbar />
   </div>

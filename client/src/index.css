@@ -4,8 +4,8 @@
 
 html {
   height: 100%;
-  background: url('/bg.svg') no-repeat center center fixed;
-  background-size: contain;
+  background: url('/bg.jpg') no-repeat center center fixed;
+  background-size: cover;
   background-color: rgb(218, 241, 255);
 }
 
@@ -14,3 +14,4 @@ body {
   height: 100%;
   color: rgb(32, 32, 32);
 }
+
