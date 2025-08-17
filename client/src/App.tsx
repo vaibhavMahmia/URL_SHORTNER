@@ -5,7 +5,7 @@ import { ErrorPage } from './pages/ErrorPage';
 import { Home } from './pages/Home';
 import { SignIn } from './pages/SignIn';
 import { Profile } from './pages/Profile';
-import { useAppDispatch } from './store';
+import { setError, useAppDispatch } from './store';
 import { getProfileThunkAction } from './store/reducers/auth_reducer';
 
 
@@ -31,15 +31,19 @@ const router = createBrowserRouter([
   }
 ])
 
-const App: React.FC = ()  => {
-  
+const App: React.FC = () => {
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getProfileThunkAction())
+    const getProfile = async () => {
+      await dispatch(getProfileThunkAction());
+      dispatch(setError(null));
+    }
+    getProfile();
   }, [dispatch]);
 
-  return <RouterProvider router={ router }/>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

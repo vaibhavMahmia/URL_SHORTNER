@@ -1,17 +1,23 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-
-html {
-  height: 100%;
-  background: url('/bg.jpg') no-repeat center center fixed;
+body {
+  margin: 0;
+  height: 100vh;
+  background: url('/bg.png') no-repeat center center fixed;
   background-size: cover;
-  background-color: rgb(218, 241, 255);
+  position: relative;
+  background-attachment: fixed;
 }
 
-
-body {
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  color: rgb(32, 32, 32);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+  z-index: 0;
 }
 

@@ -120,7 +120,7 @@ export const authenticateUser = async ({ req, res, user, name, email }) => {
 
     const refreshToken = createRefreshToken(session.id);
 
-    const baseConfig = { httpOnly: true, secure: true };
+    const baseConfig = { httpOnly: true, secure: false, sameSite: 'lax' };
 
     res.cookie("access_token", accessToken, {
         ...baseConfig,
